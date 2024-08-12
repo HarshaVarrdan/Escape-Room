@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7997119873623196750
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 37.35728
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 37.357277
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 37.357277
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.07936996
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.16152954
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.18013954
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.00930518
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.9999567
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -181.066
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: a3a530523bec0cc41aed4f3a4d9da936, type: 2}
+    - target: {fileID: 919132149155446097, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a,
+        type: 3}
+      propertyPath: m_Name
+      value: Kaca Pembesar (new)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0d2ae6facb5cddb40ac34c8fef3fac5a, type: 3}
