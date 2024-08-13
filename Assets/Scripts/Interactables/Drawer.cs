@@ -9,6 +9,8 @@ public class Drawer : MonoBehaviour, IInteract
     [SerializeField] bool isZAxis = false;
     [SerializeField] float offset;
 
+    bool canInteract;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,23 +24,31 @@ public class Drawer : MonoBehaviour, IInteract
     }
     public void OnInteraction()
     {
-        if (!isOpened)
+        if (canInteract)
         {
-            Debug.Log("Called");
-            if(isZAxis) 
-                transform.position -= transform.up * offset;
-            else
-            transform.position += transform.right * offset;
-            isOpened = true;
+            if (!isOpened)
+            {
+                Debug.Log("Called");
+                if (isZAxis)
+                    transform.position -= transform.up * offset;
+                else
+                    transform.position += transform.right * offset;
+                isOpened = true;
+            }
+            else if (isOpened)
+            {
+                Debug.Log("Called");
+                if (isZAxis)
+                    transform.position += transform.up * offset;
+                else
+                    transform.position -= transform.right * offset;
+                isOpened = false;
+            }
         }
-        else if (isOpened) 
-        {
-            Debug.Log("Called");
-            if (isZAxis)
-                transform.position += transform.up * offset;
-            else
-                transform.position -= transform.right * offset;
-            isOpened = false;
-        }
+    }
+
+    public bool CanInteract()
+    {
+        return canInteract;
     }
 }
