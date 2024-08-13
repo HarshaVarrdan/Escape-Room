@@ -18,18 +18,17 @@ public class ItemFrameUI : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void updateFrameImage(ItemData itemData)
     {
         id = itemData;
-        if (itemImage != null)
-            itemImage.sprite = id.icon;
-            itemImage.color = Color.white;
+        if (itemData == null)
+        { 
+            itemImage.enabled = false;
+            return;
+        }
+        itemImage.enabled = true;
+        itemImage.sprite = id.icon;
+        itemImage.color = Color.white;
 
     }
 }

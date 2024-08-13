@@ -15,8 +15,12 @@ public class PlayerInventory : MonoBehaviour
 
     private void Awake()
     {
-        if(PIn_Instance == null)
+        if (PIn_Instance == null)
+        {
             PIn_Instance = this;
+            Debug.Log("Player Inventory Instance Created");
+        }
+
     }
 
     // Start is called before the first frame update

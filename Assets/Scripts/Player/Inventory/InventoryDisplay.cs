@@ -24,7 +24,11 @@ public class InventoryDisplay : MonoBehaviour
     private void Awake()
     {
         if (inventoryDisplay == null)
+        {
             inventoryDisplay = this;
+            Debug.Log("Inventory Display Instance Created");
+
+        }
 
         inventory = Resources.Load<Inventory>("Objects/Inventory");
 

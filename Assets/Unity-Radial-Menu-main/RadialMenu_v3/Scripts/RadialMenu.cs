@@ -28,7 +28,7 @@ namespace Rito.RadialMenu_v3
         //[Header("Objects")]
         [SerializeField] private GameObject _pieceSample; // 복제될 조각 게임오브젝트
         [SerializeField] private RectTransform _arrow;    // 화살표 이미지의 부모 트랜스폼
-        
+
         // 복제된 조각들
         private Image[] _pieceImages;
         private RectTransform[] _pieceRects;
@@ -41,7 +41,7 @@ namespace Rito.RadialMenu_v3
         private int _selectedIndex = -1;
 
         private const float NotSelectedPieceAlpha = 0.5f;
-        private static readonly Color SelectedPieceColor    = new Color(1f, 1f, 1f, 1f);
+        private static readonly Color SelectedPieceColor = new Color(1f, 1f, 1f, 1f);
         private static readonly Color NotSelectedPieceColor = new Color(1f, 1f, 1f, NotSelectedPieceAlpha);
 
         /***********************************************************************
@@ -64,6 +64,7 @@ namespace Rito.RadialMenu_v3
         ***********************************************************************/
         #region .
         /// <summary> 조각 샘플 복제하여 조각들 생성 </summary>
+
         private void InitPieceImages()
         {
             _pieceSample.SetActive(true);
@@ -210,12 +211,17 @@ namespace Rito.RadialMenu_v3
         {
             int i = 0;
             int len = itemsData.Count;
-            for (; i < _pieceCount && i < len; i++)
+            //_pieceCount = itemsData.Count;
+            for (; i < _pieceCount; i++)
             {
-                if (itemsData[i] != null)
+                ItemFrameUI ifUI = _pieceImages[i].GetComponent<ItemFrameUI>();
+                if (i <= itemsData.Count - 1)
                 {
-                    _pieceImages[i].GetComponent<ItemFrameUI>().id = itemsData[i];
-                    //_pieceImages[i].sprite = itemsData[i].id;
+                    ifUI.updateFrameImage(itemsData[i]);
+                }
+                else
+                {
+                    ifUI.updateFrameImage(null);
                 }
             }
             Debug.Log("RadialMenu Updated");

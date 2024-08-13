@@ -27,13 +27,20 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         if (PC_Instance == null)
+        {
             PC_Instance = this;
+            Debug.Log("Player Controller Instance Created");
+
+        }
     }
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         playerCamera = GetComponentInChildren<Camera>();
+
+        ReArrangeBook.AB_Instance.onRearrangeStart += ChangeCanMoveRotateValue;
+        ReArrangeBook.AB_Instance.onRearrangeEnd += ChangeCanMoveRotateValue;
     }
 
     void Update()
@@ -62,24 +69,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void ChangeCanRotateTrue()
+    void ChangeCanMoveRotateValue(bool val)
     {
-        canRotate = true; 
-    }
-    void ChangeCanRotateFalse()
-    {
-        canRotate = false;
+        canRotate = val; 
+        canMove = val;
     }
 
-    void ChangeCanMoveTrue()
+    void ChangeCanMoveValue(bool val)
     {
-        canMove = true;
+        canMove = val;
     }
-    void ChangeCanMoveFalse()
-    {
-        canMove = false;
-    }
-
+    
     public void TakeObjectInHand(int index)
     {
         if(ItemHolder.transform.childCount > 0)

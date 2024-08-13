@@ -7,8 +7,8 @@ using UnityEngine.Events;
 [CreateAssetMenu]
 public class Inventory : ScriptableObject
 {
-    public List<ItemData> items = new List<ItemData>();
-    public List<GameObject> itemsGO = new List<GameObject>();
+    public List<ItemData> items = new List<ItemData>(8);
+    public List<GameObject> itemsGO = new List<GameObject>(8);
     public UnityAction<List<ItemData>> addItemEvent;
     public UnityAction<List<ItemData>> removeItemEvent;
 

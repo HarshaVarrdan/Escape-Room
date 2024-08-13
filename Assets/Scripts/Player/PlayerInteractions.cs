@@ -13,6 +13,8 @@ public class PlayerInteractions : MonoBehaviour
         if(PI_Instance == null)
         {
             PI_Instance = this;
+            Debug.Log("Player Interaction Instance Created");
+
         }
     }
 
