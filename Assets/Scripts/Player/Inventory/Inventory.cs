@@ -12,11 +12,12 @@ public class Inventory : ScriptableObject
     public UnityAction<List<ItemData>> addItemEvent;
     public UnityAction<List<ItemData>> removeItemEvent;
 
-    public void AddItem(ItemData item, GameObject itemGO)
+    public int AddItem(ItemData item, GameObject itemGO)
     {
         items.Add(item);
         itemsGO.Add(itemGO);
         addItemEvent?.Invoke(items);
+        return items.Count - 1; 
     }
 
     public void RemoveItem(int index)

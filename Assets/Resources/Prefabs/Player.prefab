@@ -178,8 +178,8 @@ GameObject:
   - component: {fileID: 8363441934585855441}
   - component: {fileID: 8696976177488421330}
   - component: {fileID: 4459562681192346353}
-  - component: {fileID: 4960832359118784208}
   - component: {fileID: 4015153080034979725}
+  - component: {fileID: 4960832359118784208}
   - component: {fileID: 484293340389243399}
   - component: {fileID: 3364320448925745145}
   m_Layer: 0
@@ -256,25 +256,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4960832359118784208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8801689647110813932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05653c79a0229714a8bd5ef03c8d065f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3.5
-  lookSpeed: 2
-  upDownRange: 60
-  canRotate: 1
-  canMove: 1
-  indexItemInHand: 0
-  ItemHolder: {fileID: 6252889661562510873}
 --- !u!143 &4015153080034979725
 CharacterController:
   m_ObjectHideFlags: 0
@@ -301,6 +282,25 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4960832359118784208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8801689647110813932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05653c79a0229714a8bd5ef03c8d065f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3.5
+  lookSpeed: 2
+  upDownRange: 60
+  canRotate: 1
+  canMove: 1
+  indexItemInHand: 0
+  ItemHolder: {fileID: 6252889661562510873}
 --- !u!114 &484293340389243399
 MonoBehaviour:
   m_ObjectHideFlags: 0

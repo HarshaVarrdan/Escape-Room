@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BookShelfScene.unity
     guid: ad2f78f3e818ed04b9ef31705c3f5ea2
+  - enabled: 1
+    path: Assets/Scenes/VaultScene.unity
+    guid: 79824a05c62ee714f99e56f7fb3bb758
   m_configObjects: {}

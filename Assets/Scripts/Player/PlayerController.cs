@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public bool canRotate = true;
     public bool canMove = true;
     
-    public int indexItemInHand;
+    public int indexItemInHand = -1;
 
     [SerializeField] GameObject ItemHolder;
 
@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player Controller Instance Created");
 
         }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     void Start()

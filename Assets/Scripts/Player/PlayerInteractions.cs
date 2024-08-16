@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerInteractions : MonoBehaviour
 {
     PlayerInventory pInventory;
+    PlayerController pController;
 
     public static PlayerInteractions PI_Instance;
 
@@ -22,6 +23,7 @@ public class PlayerInteractions : MonoBehaviour
     void Start()
     {
         pInventory =  GetComponent<PlayerInventory>();
+        pController = GetComponent<PlayerController>();
     }
 
     public void initInteraction(IInteract interact)
@@ -35,8 +37,8 @@ public class PlayerInteractions : MonoBehaviour
         if (id != null)
         {
             Debug.Log($"{id.itemName} has been Picked up");
-            pInventory.AddItem(id,pickupGO);
-            //GetComponent<PlayerController>().AddObjectToHand(pickup.)
+            int addedItemIndex = pInventory.AddItem(id, pickupGO);
+            pController.TakeObjectInHand(addedItemIndex);
         }
 
         Debug.Log($"{pickupGO.name} has no Item Data");
