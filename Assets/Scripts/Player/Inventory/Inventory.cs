@@ -7,8 +7,8 @@ using UnityEngine.Events;
 [CreateAssetMenu]
 public class Inventory : ScriptableObject
 {
-    public List<ItemData> items = new List<ItemData>(8);
-    public List<GameObject> itemsGO = new List<GameObject>(8);
+    List<ItemData> items = new List<ItemData>(8);
+    List<GameObject> itemsGO = new List<GameObject>(8);
     public UnityAction<List<ItemData>> addItemEvent;
     public UnityAction<List<ItemData>> removeItemEvent;
 
@@ -34,6 +34,11 @@ public class Inventory : ScriptableObject
         return items; 
     }
 
+    public List<GameObject> GetItemsGO()
+    {
+        return itemsGO;
+    }
+
     public ItemData GetItem(int index)
     {
         return items[index];
@@ -42,6 +47,11 @@ public class Inventory : ScriptableObject
     public GameObject GetItemGO(int index)
     {
         return itemsGO[index];
+    }
+
+    public bool CheckForItem(GameObject itemGO)
+    {
+        return itemsGO.Contains(itemGO);
     }
 }
 

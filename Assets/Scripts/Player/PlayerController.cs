@@ -79,17 +79,20 @@ public class PlayerController : MonoBehaviour
     {
         canMove = val;
     }
-    
+
     public void TakeObjectInHand(int index)
     {
-        if(ItemHolder.transform.childCount > 0)
+        if (ItemHolder.transform.childCount > 0)
         {
-            foreach(Transform child in ItemHolder.transform)
+            foreach (Transform child in ItemHolder.transform)
             {
                 child.gameObject.SetActive(false);
             }
         }
-        ItemHolder.transform.GetChild(index).gameObject.SetActive(true);
+        if (index >= 0)
+        {
+            ItemHolder.transform.GetChild(index).gameObject.SetActive(true);
+        }
         indexItemInHand = index;
     }
 

@@ -26,7 +26,7 @@ public class PlayerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach(GameObject item in inventory.itemsGO)
+        foreach(GameObject item in inventory.GetItemsGO())
         {
             GetComponent<PlayerController>().AddObjectToHand(item);
         }
@@ -56,5 +56,10 @@ public class PlayerInventory : MonoBehaviour
     public GameObject GetItemGO(int index)
     {
         return inventory.GetItemGO(index);
+    }
+
+    public bool checkItem(GameObject go) 
+    {
+        return inventory.CheckForItem(go);
     }
 }

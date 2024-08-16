@@ -55,13 +55,17 @@ public class InventoryDisplay : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.G))
         {
             int selected = radialMenu.Hide();
-            if (inventory.items.Count >= selected)
+            Debug.Log($"Selected : {selected}");
+            if (inventory.GetItems().Count - 1 >= selected)
             {
                 Debug.Log($"Selected : {selected} {inventory.GetItem(selected).itemName}");
-                playerController.TakeObjectInHand(selected);
             }
             else
+            {
                 Debug.Log($"Selected : {selected}");
+                selected = -1;
+            }
+            playerController.TakeObjectInHand(selected);
             playerController.canRotate = true;
             onRadialMenuClose?.Invoke();
         }

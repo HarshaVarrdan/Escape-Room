@@ -24,12 +24,6 @@ public class PlayerInteractions : MonoBehaviour
         pInventory =  GetComponent<PlayerInventory>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void initInteraction(IInteract interact)
     {
         interact.OnInteraction();
@@ -40,9 +34,12 @@ public class PlayerInteractions : MonoBehaviour
         ItemData id = pickupGO.GetComponent<IPickup>().OnPickup();
         if (id != null)
         {
+            Debug.Log($"{id.itemName} has been Picked up");
             pInventory.AddItem(id,pickupGO);
             //GetComponent<PlayerController>().AddObjectToHand(pickup.)
         }
+
+        Debug.Log($"{pickupGO.name} has no Item Data");
 
     }
 
