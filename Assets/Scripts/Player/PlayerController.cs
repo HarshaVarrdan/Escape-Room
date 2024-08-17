@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Purchasing;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -33,6 +33,11 @@ public class PlayerController : MonoBehaviour
 
         }
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneChange;
     }
 
     void Start()
@@ -74,6 +79,13 @@ public class PlayerController : MonoBehaviour
     {
         canRotate = val; 
         canMove = val;
+    }
+
+    void OnSceneChange(Scene scene, LoadSceneMode mode)
+    {
+        Transform spawnpointTransform = GameObject.FindWithTag("SpawnPoint").gameObject.transform;
+        if(spawnpointTransform != null ) 
+            transform.SetPositionAndRotation(spawnpointTransform.position,spawnpointTransform.rotation);
     }
 
     void ChangeCanMoveValue(bool val)

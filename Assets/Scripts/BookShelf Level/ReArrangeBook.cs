@@ -56,35 +56,33 @@ public class ReArrangeBook : MonoBehaviour , IInteract
 
     public void OnInteraction()
     {
-        if (canInteract)
+        int itemIndex = PlayerController.PC_Instance.indexItemInHand;
+        if (!canRearrange && !CanStartRearrange())
         {
-            int itemIndex = PlayerController.PC_Instance.indexItemInHand;
-            if (!canRearrange && !CanStartRearrange())
+            if (itemIndex >= 0)
             {
-                if (itemIndex >= 0)
+                ItemData itemData = PlayerInventory.PIn_Instance.GetItemData(itemIndex);
+                if (itemData.itemName == "Book")
                 {
-                    ItemData itemData = PlayerInventory.PIn_Instance.GetItemData(itemIndex);
-                    if (itemData.itemName == "Book")
-                    {
-                        Debug.Log("Book Added");
-                        GameObject book = PlayerInventory.PIn_Instance.GetItemGO(itemIndex);
-                        book.transform.SetParent(parentTrans);
-                        book.GetComponent<Pickup>().OnPlaced();
-                        PlayerInventory.PIn_Instance.RemoveItem(itemIndex);
-                        PlayerController.PC_Instance.indexItemInHand = -1;
-                        CanStartRearrange();
-                    }
-                    else
-                    {
-                        Debug.Log("Nothing Added");
-                    }
+                    Debug.Log("Book Added");
+                    GameObject book = PlayerInventory.PIn_Instance.GetItemGO(itemIndex);
+                    book.transform.SetParent(parentTrans);
+                    book.GetComponent<Pickup>().OnPlaced();
+                    PlayerInventory.PIn_Instance.RemoveItem(itemIndex);
+                    PlayerController.PC_Instance.indexItemInHand = -1;
+                    CanStartRearrange();
+                }
+                else
+                {
+                    Debug.Log("Nothing Added");
                 }
             }
-            else
-            {
-                StartRearranging();
-            }
         }
+        else
+        {
+            StartRearranging();
+        }
+
     }
 
     public void EndInteraction()

@@ -28,7 +28,8 @@ public class PlayerInteractions : MonoBehaviour
 
     public void initInteraction(IInteract interact)
     {
-        interact.OnInteraction();
+        if (interact.CanInteract())
+            interact.OnInteraction();
     }
 
     public void initPickup(GameObject pickupGO)

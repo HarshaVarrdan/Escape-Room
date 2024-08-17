@@ -12,8 +12,7 @@ public class Drawer : MonoBehaviour, IInteract
     [SerializeField] Sprite chImage;    
     [SerializeField] Sprite chImageN;
 
-
-    public bool canInteract;
+    private bool canInteract;
 
     // Start is called before the first frame update
     void Start()
@@ -29,21 +28,18 @@ public class Drawer : MonoBehaviour, IInteract
 
     public void OnInteraction()
     {
-        if (canInteract)
+        if (!isOpened)
         {
-            if (!isOpened)
-            {
-                Debug.Log("Called");
-                if (isZAxis)
-                    transform.position -= transform.up * offset;
-                else
-                    transform.position += transform.right * offset;
-                isOpened = true;
-            }
-            else if (isOpened)
-            {
-                EndInteraction();
-            }
+            Debug.Log("Called");
+            if (isZAxis)
+                transform.position -= transform.up * offset;
+            else
+                transform.position += transform.right * offset;
+            isOpened = true;
+        }
+        else if (isOpened)
+        {
+            EndInteraction();
         }
     }
 

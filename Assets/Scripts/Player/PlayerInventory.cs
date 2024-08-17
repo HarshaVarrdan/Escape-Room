@@ -38,9 +38,9 @@ public class PlayerInventory : MonoBehaviour
         
     }
 
-    public void AddItem(ItemData item, GameObject go)
+    public int AddItem(ItemData item, GameObject go)
     {
-        inventory.AddItem(item,go);
+        return inventory.AddItem(item,go);
     }
 
     public void RemoveItem(int index)
