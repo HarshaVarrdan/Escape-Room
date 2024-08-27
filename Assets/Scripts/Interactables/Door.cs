@@ -5,25 +5,36 @@ using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour , IInteract
 {
-    
 
     [SerializeField] int DoorSceneIndex;
     [SerializeField] bool isReturnDoor;
-    [SerializeField] GameObject keyObject;
+
+    [SerializeField] ItemData keyObject;
     [SerializeField] Sprite chImage;
+    [SerializeField] AudioClip onInteractSound;
+    [SerializeField] AudioClip onNoInteractSound;
 
-
+    private AudioSource interactionAS;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        interactionAS = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void PlaySound(bool interacted)
+    {
+        if(interactionAS != null)
+            if(interacted)
+                interactionAS.PlayOneShot(onInteractSound);
+            else
+                interactionAS.PlayOneShot(onNoInteractSound);
     }
 
     private void ChangeScene()
@@ -33,21 +44,27 @@ public class Door : MonoBehaviour , IInteract
 
     public bool CanInteract()
     {
-        throw new System.NotImplementedException();
+        return true;
     }
 
     public void OnInteraction()
     {
         if (isReturnDoor) 
         {
+            PlaySound(true);
             ChangeScene();
         }
         else
         {
-            if (PlayerInventory.PIn_Instance.checkItem(keyObject))
+            if (PlayerInventory.PIn_Instance.checkItem(keyObject) && 
+                (keyObject == PlayerController.PC_Instance.itemDataOfItemInHand))
             {
+                PlaySound(true);
+                PlayerInventory.PIn_Instance.RemoveItem(PlayerController.PC_Instance.itemDataOfItemInHand,true) ;
                 ChangeScene();
             }
+            else 
+                PlaySound(false);
         }
     }
 

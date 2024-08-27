@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
@@ -11,7 +12,9 @@ public class PlayerController : MonoBehaviour
     public bool canRotate = true;
     public bool canMove = true;
     
-    public int indexItemInHand = -1;
+    public ItemData itemDataOfItemInHand = null;
+    public GameObject gameObjectOfItemInHand = null;
+    public PickableItem pickableItemInHand = null;
 
     [SerializeField] GameObject ItemHolder;
 
@@ -20,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     private Camera playerCamera;
 
-    List<GameObject> itemsInHand = new List<GameObject>();
+    public UnityAction playerDisableInteraction;
 
     public static PlayerController PC_Instance;
 
@@ -73,12 +76,23 @@ public class PlayerController : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
             transform.Rotate(Vector3.up * mouseX);
         }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            ItemData itemData = itemDataOfItemInHand;
+            if (itemData != null)
+            {
+                PlayerInventory.PIn_Instance.RemoveItem(itemData,false);
+            }
+
+        }
     }
 
     void ChangeCanMoveRotateValue(bool val)
     {
         canRotate = val; 
         canMove = val;
+        playerDisableInteraction?.Invoke();
     }
 
     void OnSceneChange(Scene scene, LoadSceneMode mode)
@@ -93,31 +107,44 @@ public class PlayerController : MonoBehaviour
         canMove = val;
     }
 
-    public void TakeObjectInHand(int index)
+    public void TakeObjectInHand(ItemData id)
     {
+        
         if (ItemHolder.transform.childCount > 0)
         {
             foreach (Transform child in ItemHolder.transform)
             {
-                child.gameObject.SetActive(false);
+                Destroy(child.gameObject);
             }
         }
-        if (index >= 0)
+
+        if (id == null)
+            return;
+        
+        itemDataOfItemInHand = id;
+        gameObjectOfItemInHand = Instantiate(itemDataOfItemInHand.itemObject,ItemHolder.transform);
+        pickableItemInHand = gameObjectOfItemInHand.GetComponent<PickableItem>();
+        
+        pickableItemInHand.OnPickedInHand();
+
+    }
+
+    public void RemoveObjectFromHand(bool dropItem)
+    {
+        if (gameObjectOfItemInHand != null)
         {
-            ItemHolder.transform.GetChild(index).gameObject.SetActive(true);
+            if (dropItem)
+                DropItemfromHand();
+            Destroy(gameObjectOfItemInHand);
         }
-        indexItemInHand = index;
+        gameObjectOfItemInHand = null;
+        itemDataOfItemInHand = null;
+        pickableItemInHand = null;
     }
 
-    public void AddObjectToHand(GameObject pickedObject)
+    void DropItemfromHand()
     {
-        itemsInHand.Add(pickedObject);
-        pickedObject.transform.parent = ItemHolder.transform;
-        pickedObject.GetComponent<IPickup>().OnPickedInHand();  
-    }
-
-    public void RemoveObjectFromHand(GameObject pickedObject)
-    {
-        itemsInHand.Remove(pickedObject);
+        GameObject temp = Instantiate(gameObjectOfItemInHand, ItemHolder.transform.position, Quaternion.identity);
+        temp.GetComponent<PickableItem>().OnPlaced(false);
     }
 }

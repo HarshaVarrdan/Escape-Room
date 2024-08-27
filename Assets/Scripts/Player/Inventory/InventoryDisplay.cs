@@ -59,13 +59,14 @@ public class InventoryDisplay : MonoBehaviour
             if (inventory.GetItems().Count - 1 >= selected)
             {
                 Debug.Log($"Selected : {selected} {inventory.GetItem(selected).itemName}");
+                playerController.TakeObjectInHand(inventory.GetItems()[selected]);
             }
             else
             {
                 Debug.Log($"Selected : {selected}");
                 selected = -1;
+                playerController.TakeObjectInHand(null);
             }
-            playerController.TakeObjectInHand(selected);
             playerController.canRotate = true;
             onRadialMenuClose?.Invoke();
         }

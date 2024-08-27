@@ -54,81 +54,11 @@ public class ReArrangeBook : MonoBehaviour , IInteract
         }
     }
 
-    public void OnInteraction()
-    {
-        int itemIndex = PlayerController.PC_Instance.indexItemInHand;
-        if (!canRearrange && !CanStartRearrange())
-        {
-            if (itemIndex >= 0)
-            {
-                ItemData itemData = PlayerInventory.PIn_Instance.GetItemData(itemIndex);
-                if (itemData.itemName == "Book")
-                {
-                    Debug.Log("Book Added");
-                    GameObject book = PlayerInventory.PIn_Instance.GetItemGO(itemIndex);
-                    book.transform.SetParent(parentTrans);
-                    book.GetComponent<Pickup>().OnPlaced();
-                    PlayerInventory.PIn_Instance.RemoveItem(itemIndex);
-                    PlayerController.PC_Instance.indexItemInHand = -1;
-                    CanStartRearrange();
-                }
-                else
-                {
-                    Debug.Log("Nothing Added");
-                }
-            }
-        }
-        else
-        {
-            StartRearranging();
-        }
-
-    }
-
-    public void EndInteraction()
-    {
-        EndRearranging(false);
-    }
-
-    public bool CanStartRearrange()
-    {
-        if(parentTrans.childCount == 10)
-        {
-            canRearrange = true;
-
-            ChangeBookInteractionStatus(true);
-            
-            return true;
-        }
-        return false;
-    }
-
-    public void OnBookOrderChanged()
-    {
-        List<Book> books = new List<Book>();
-        books.AddRange(GetComponentsInChildren<Book>());
-
-        int i = 10;
-
-        foreach (Book book in books) 
-        {
-            if(book.GetBookNumber() != i)
-            {
-                Debug.Log($"Arrangement wrong {book.GetBookNumber()} {i}");
-                return;
-            }
-            i--;
-        }
-        Debug.Log("Arrangement Correct");
-        EndRearranging(true);
-
-    }
-
     private void StartRearranging()
     {
         mainCamera.enabled = !canRearrange;
         bookCamera.enabled = canRearrange;
-        
+
         isInteracting = true;
         ChangeBookInteractionStatus(true);
 
@@ -156,6 +86,51 @@ public class ReArrangeBook : MonoBehaviour , IInteract
         onRearrangeEnd?.Invoke(true);
     }
 
+    private void ChangeBookInteractionStatus(bool val)
+    {
+        foreach (Transform child in parentTrans)
+        {
+            child.GetComponent<BoxCollider>().enabled = val;
+            child.GetComponent<FlexalonInteractable>().enabled = val;
+
+            child.GetComponent<FlexalonInteractable>().DragEnd.AddListener(OnBookOrderChanged);
+        }
+    }
+
+    public void OnInteraction()
+    {
+        ItemData itemData = PlayerController.PC_Instance.itemDataOfItemInHand;
+        if (!canRearrange && !CanStartRearrange())
+        {
+            if (itemData != null)
+            {
+                if (itemData.itemName == "Book")
+                {
+                    Debug.Log("Book Added");
+
+                    GameObject book = Instantiate(itemData.itemObject,parentTrans);
+                    book.GetComponent<PickableItem>().OnPlaced(true);
+                    book.GetComponent<PickableItem>().DisablePickup();
+                    book.GetComponent<BoxCollider>().enabled = false;
+                    Destroy(book.GetComponent<Rigidbody>());
+
+                    PlayerInventory.PIn_Instance.RemoveItem(itemData,true);
+
+                    CanStartRearrange();
+                }
+                else
+                {
+                    Debug.Log("Nothing Added");
+                }
+            }
+        }
+        else
+        {
+            StartRearranging();
+        }
+
+    }
+
     public bool CanInteract()
     {
         return canInteract;
@@ -166,12 +141,43 @@ public class ReArrangeBook : MonoBehaviour , IInteract
         return (canInteract) ? chImage : chImageN;
     }
 
-    private void ChangeBookInteractionStatus(bool val)
+    public void EndInteraction()
     {
-        foreach (Transform child in parentTrans)
-        {
-            child.GetComponent<BoxCollider>().enabled = val;
-            child.GetComponent<FlexalonInteractable>().enabled = val;
-        }
+        EndRearranging(false);
     }
+
+    public bool CanStartRearrange()
+    {
+        if(parentTrans.childCount == 10)
+        {
+            canRearrange = true;
+
+            ChangeBookInteractionStatus(true);
+            
+            return true;
+        }
+        return false;
+    }
+
+    public void OnBookOrderChanged(FlexalonInteractable fi)
+    {
+        List<PickableItem> books = new List<PickableItem>();
+        books.AddRange(GetComponentsInChildren<PickableItem>());
+
+        int i = 10;
+
+        foreach (PickableItem book in books) 
+        {
+            if(book.GetBookNumber() != i)
+            {
+                Debug.Log($"Arrangement wrong {book.GetBookNumber()} {i}");
+                return;
+            }
+            i--;
+        }
+        Debug.Log("Arrangement Correct");
+        EndRearranging(true);
+
+    }
+
 }

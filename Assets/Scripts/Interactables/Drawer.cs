@@ -8,22 +8,39 @@ public class Drawer : MonoBehaviour, IInteract
 
     [SerializeField] bool isOpened = false;
     [SerializeField] bool isZAxis = false;
+    [SerializeField] bool canInteract = true;
+    
     [SerializeField] float offset;
+    
     [SerializeField] Sprite chImage;    
     [SerializeField] Sprite chImageN;
 
-    private bool canInteract;
+    [SerializeField] AudioClip onInteractSound;
+    [SerializeField] AudioClip onNoInteractSound;
+
+    private AudioSource interactionAS;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        interactionAS = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void PlaySound(bool interacted)
+    {
+        if (interactionAS != null)
+            if (interacted)
+                interactionAS.PlayOneShot(onInteractSound);
+            else
+                interactionAS.PlayOneShot(onNoInteractSound);
+
     }
 
     public void OnInteraction()
@@ -70,5 +87,4 @@ public class Drawer : MonoBehaviour, IInteract
         else
             return chImageN;
     }
-
 }

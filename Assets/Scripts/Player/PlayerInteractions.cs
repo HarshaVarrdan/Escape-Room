@@ -38,8 +38,8 @@ public class PlayerInteractions : MonoBehaviour
         if (id != null)
         {
             Debug.Log($"{id.itemName} has been Picked up");
-            int addedItemIndex = pInventory.AddItem(id, pickupGO);
-            pController.TakeObjectInHand(addedItemIndex);
+            pInventory.AddItem(id);
+            pController.TakeObjectInHand(id);
         }
 
         Debug.Log($"{pickupGO.name} has no Item Data");

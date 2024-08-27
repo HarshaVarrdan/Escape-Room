@@ -1,31 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "Inventory")]
 public class Inventory : ScriptableObject
 {
     [SerializeField] List<ItemData> items = new List<ItemData>(8);
-    [SerializeField] List<GameObject> itemsGO = new List<GameObject>(8);
+
     public UnityAction<List<ItemData>> addItemEvent;
     public UnityAction<List<ItemData>> removeItemEvent;
 
-    public int AddItem(ItemData item, GameObject itemGO)
+    private static Inventory instance;
+    public static Inventory Inv_Instance
+    {
+        get {
+            if (instance == null)
+            {
+                instance = Resources.Load<Inventory>("Objects/Inventory");
+                if (instance == null)
+                {
+                    Debug.LogError("Singleton instance of MyScriptableSingleton not found. Please create it and place it in a Resources folder.");
+                }
+            }
+            return instance;
+        }
+    }
+
+    
+    public void AddItem(ItemData item)
     {
         items.Add(item);
-        itemsGO.Add(itemGO);
         addItemEvent?.Invoke(items);
-        return items.Count - 1; 
+    }
+
+    public void RemoveItem(ItemData id)
+    {
+        if (items.Contains(id))
+        {
+            items.Remove(id);
+            removeItemEvent?.Invoke(items);
+        }
     }
 
     public void RemoveItem(int index)
     {
-        if (items[index] != null && itemsGO[index] != null)
+        if (items[index] != null)
         { 
             items.RemoveAt(index);
-            itemsGO.RemoveAt(index);
             removeItemEvent?.Invoke(items);
         }
     }
@@ -35,24 +59,36 @@ public class Inventory : ScriptableObject
         return items; 
     }
 
-    public List<GameObject> GetItemsGO()
-    {
-        return itemsGO;
-    }
-
     public ItemData GetItem(int index)
     {
         return items[index];
     }
 
-    public GameObject GetItemGO(int index)
+    public bool CheckForItem(ItemData id)
     {
-        return itemsGO[index];
+        return items.Contains(id);
     }
 
-    public bool CheckForItem(GameObject itemGO)
+    public void ClearInventory()
     {
-        return itemsGO.Contains(itemGO);
+        items.Clear();
+    }
+}
+
+[CustomEditor(typeof(Inventory))]
+public class MyInventoryObjectEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        Inventory myInventoryObject = (Inventory)target;
+
+        if (GUILayout.Button("Clear Inventory"))
+        {
+            Debug.Log("Button pressed!");
+            myInventoryObject.ClearInventory();
+        }
     }
 }
 

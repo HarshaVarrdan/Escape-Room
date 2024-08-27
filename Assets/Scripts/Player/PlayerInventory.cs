@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +12,8 @@ public class PlayerInventory : MonoBehaviour
 
     public UnityAction onRemoveItem;
     public UnityAction onAddItem;
+
+    private PlayerController playerController;
 
     public static PlayerInventory PIn_Instance;
 
@@ -26,10 +30,7 @@ public class PlayerInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach(GameObject item in inventory.GetItemsGO())
-        {
-            GetComponent<PlayerController>().AddObjectToHand(item);
-        }
+        playerController = GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -38,28 +39,39 @@ public class PlayerInventory : MonoBehaviour
         
     }
 
-    public int AddItem(ItemData item, GameObject go)
+    public void AddItem(ItemData item)
     {
-        return inventory.AddItem(item,go);
+        inventory.AddItem(item);
+
+        onAddItem?.Invoke();
     }
 
-    public void RemoveItem(int index)
+    public void RemoveItem(ItemData id, bool destroyItem)
     {
-        inventory.RemoveItem(index);
+        inventory.RemoveItem(id);
+        playerController.RemoveObjectFromHand(!destroyItem);
+        onRemoveItem?.Invoke();
     }
+
+    /*public void DropItem(int index)
+    {
+        GameObject goToRemove = inventory.GetItemGO(index);
+        if (goToRemove != null)
+        {
+            inventory.RemoveItem(index);
+            goToRemove.GetComponent<IPickup>().OnPlaced(false);
+            onRemoveItem?.Invoke(goToRemove);
+        }
+    }*/
 
     public ItemData GetItemData(int index)
     {
         return inventory.GetItem(index);
     }
 
-    public GameObject GetItemGO(int index)
+    public bool checkItem(ItemData id) 
     {
-        return inventory.GetItemGO(index);
+        return inventory.CheckForItem(id);
     }
 
-    public bool checkItem(GameObject go) 
-    {
-        return inventory.CheckForItem(go);
-    }
 }

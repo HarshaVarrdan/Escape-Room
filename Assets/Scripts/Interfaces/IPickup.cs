@@ -3,5 +3,8 @@ public interface IPickup
 {
     ItemData OnPickup();
     void OnPickedInHand();
-    void OnPlaced();
+    void OnPlaced(bool placedOnDesiredLocation);
+
+    void DisablePickup();
+    void EnablePickup();
 }
